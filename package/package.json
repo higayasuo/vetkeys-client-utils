@@ -1,0 +1,22 @@
+{
+  "name": "ic-vetkd-utils",
+  "type": "module",
+  "collaborators": [
+    "The Internet Computer Project Developers"
+  ],
+  "description": "Autonomous serverless cloud functionality for the public Internet.",
+  "version": "0.1.0",
+  "files": [
+    "ic_vetkd_utils_bg.wasm.js",
+    "ic_vetkd_utils.js",
+    "ic_vetkd_utils_bg.js",
+    "ic_vetkd_utils.d.ts",
+    "ic_vetkd_utils_bg.wasm.d.ts"
+  ],
+  "main": "ic_vetkd_utils.js",
+  "types": "ic_vetkd_utils.d.ts",
+  "sideEffects": [
+    "./ic_vetkd_utils.js",
+    "./snippets/*"
+  ]
+}
