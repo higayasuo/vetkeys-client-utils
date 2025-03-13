@@ -14,6 +14,7 @@ npm install vetkeys-client-utils
 - Symmetric key creation
 - Transport Secret Key management
 - Full TypeScript support
+- Version-independent principal handling (accepts raw Uint8Array)
 
 ## Usage
 
@@ -33,14 +34,13 @@ const publicKey = tsk.getPublicKey();
 ### Creating a Symmetric Key
 
 ```typescript
-import { Principal } from '@dfinity/principal';
 import { createSymmetricKey } from 'vetkeys-client-utils';
 
 const key = createSymmetricKey({
   seed: new Uint8Array(32), // Your secure random seed
   encryptedKey: encryptedKeyBytes, // From your canister
   publicKey: publicKeyBytes, // From your canister
-  principal: Principal.from('...'), // Target principal
+  principal: principalBytes, // Principal as Uint8Array
   keyLength: 32, // Optional, defaults to 32
   purpose: 'aes-256-cbc-hmac-sha256', // Optional, defaults to 'aes-256-cbc-hmac-sha256'
 });
@@ -49,12 +49,11 @@ const key = createSymmetricKey({
 ### Encrypting Data with IBE
 
 ```typescript
-import { Principal } from '@dfinity/principal';
 import { ibeEncrypt } from 'vetkeys-client-utils';
 
 const ciphertext = await ibeEncrypt({
   data: new TextEncoder().encode('Hello, World!'), // Data to encrypt
-  principal: Principal.from('...'), // Target principal
+  principal: principalBytes, // Principal as Uint8Array
   publicKey: publicKeyBytes, // From your canister
   seed: new Uint8Array(32), // Random seed for encryption
 });
@@ -63,15 +62,15 @@ const ciphertext = await ibeEncrypt({
 ### Decrypting Data with IBE
 
 ```typescript
-import { Principal } from '@dfinity/principal';
-import { ibeDecrypt, TransportSecretKeyWrapper } from 'vetkeys-client-utils';
+import { ibeDecrypt } from 'vetkeys-client-utils';
+import * as vetkd from 'ic-vetkd-utils-wasm2js';
 
 const plaintext = await ibeDecrypt({
   ciphertext: encryptedData, // Encrypted data
-  principal: Principal.from('...'), // Target principal
+  principal: principalBytes, // Principal as Uint8Array
   encryptedKey: encryptedKeyBytes, // From your canister
   publicKey: publicKeyBytes, // From your canister
-  tsk: new TransportSecretKeyWrapper(seed), // Your transport secret key
+  tsk: new vetkd.TransportSecretKey(seed), // Your transport secret key
 });
 ```
 

@@ -1,9 +1,8 @@
-import { Principal } from '@dfinity/principal';
 import * as vetkd from 'ic-vetkd-utils-wasm2js';
 
 export interface IBEEncryptParams {
   data: Uint8Array;
-  principal: Principal;
+  principal: Uint8Array;
   publicKey: Uint8Array;
   seed: Uint8Array;
 }
@@ -19,11 +18,9 @@ export const ibeEncrypt = async ({
   publicKey,
   seed,
 }: IBEEncryptParams): Promise<Uint8Array> => {
-  const principalBytes = principal.toUint8Array();
-
   const ciphertext = vetkd.IBECiphertext.encrypt(
     publicKey,
-    principalBytes,
+    principal,
     data,
     seed,
   );

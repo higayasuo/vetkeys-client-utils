@@ -1,13 +1,11 @@
-import { Principal } from '@dfinity/principal';
 import * as vetkd from 'ic-vetkd-utils-wasm2js';
-import { TransportSecretKeyWrapper } from './TransportSecretKeyWrapper';
 
 export interface IBEDecryptParams {
   ciphertext: Uint8Array;
-  principal: Principal;
+  principal: Uint8Array;
   encryptedKey: Uint8Array;
   publicKey: Uint8Array;
-  tsk: TransportSecretKeyWrapper;
+  tsk: vetkd.TransportSecretKey;
 }
 
 /**
@@ -22,7 +20,7 @@ export const ibeDecrypt = async ({
   publicKey,
   tsk,
 }: IBEDecryptParams): Promise<Uint8Array> => {
-  const keyBytes = tsk.decrypt({ encryptedKey, publicKey, principal });
+  const keyBytes = tsk.decrypt(encryptedKey, publicKey, principal);
   const ciphertextObj = vetkd.IBECiphertext.deserialize(ciphertext);
   return ciphertextObj.decrypt(keyBytes);
 };

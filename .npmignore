@@ -1,0 +1,32 @@
+# Source files
+src/
+
+# Test files
+**/__tests__/
+*.spec.ts
+
+# Development config files
+.eslintrc*
+.prettierrc*
+.editorconfig
+tsconfig.json
+vite.config.ts
+
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+
+# Build process
+coverage/
+node_modules/
+
+# Misc
+.DS_Store
+*.log
+
+# npm pack
+*.tgz
