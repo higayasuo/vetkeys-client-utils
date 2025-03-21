@@ -7,20 +7,11 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'VetkeysClientUtils',
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'umd.cjs'}`,
+      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['ic-vetkd-utils'],
-      output: {
-        globals: {
-          'ic-vetkd-utils': 'IcVetkdUtils',
-        },
-      },
+      external: ['ic-vetkd-utils-wasm2js'],
     },
   },
   plugins: [dts({ rollupTypes: true })],
-  test: {
-    globals: true,
-    environment: 'node',
-  },
 });
